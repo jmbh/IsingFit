@@ -1,5 +1,11 @@
 IsingFit <-
-  function(x, family='binomial', AND = TRUE, gamma = 0.25, plot = TRUE, progressbar = TRUE, lowerbound.lambda = NA,...){
+  function(x, family='binomial', 
+           AND = TRUE, 
+           gamma = 0.25, 
+           plot = TRUE, 
+           progressbar = TRUE, 
+           lowerbound.lambda = NA, 
+           lambda.list = NA, ...){
     t0 <- Sys.time()
     xx <- x
     if (family!='binomial') 
@@ -40,12 +46,25 @@ IsingFit <-
     p <- nvar - 1
     intercepts <- betas <- lambdas <- list(vector,nvar)
     nlambdas <- rep(0,nvar)
+    
+    glmnet_models <- list() # Storage
+    
     for (i in 1: nvar){
-      a <- glmnet(x[,-i], x[,i], family = family)
+      
+      if(!is.na(lambda.list)) {
+        a <- glmnet(x[,-i], x[,i], family = family, lambda = lambda.list[[i]]) # take provided lambda sequence
+      } else {
+        a <- glmnet(x[,-i], x[,i], family = family) # take glmnet default lambda sequence
+      }
+
       intercepts[[i]] <- a$a0
       betas[[i]] <- a$beta
       lambdas[[i]] <- a$lambda
       nlambdas[i] <- length(lambdas[[i]])
+      
+      # Save glmnet object
+      glmnet_models[[i]] <- a
+
     }
     
     if (progressbar==TRUE) pb <- txtProgressBar(max=nvar, style = 3)
@@ -128,7 +147,7 @@ IsingFit <-
     q <- qgraph(graphNew,layout='spring',labels=names(NodesToAnalyze),DoNotPlot=notplot,...)
     Res <- list(weiadj = graphNew, thresholds = threshNew, q = q, gamma = gamma, 
                 AND = AND, time = Sys.time() - t0, asymm.weights = asymm.weights,
-                lambda.values = lambda.val)
+                lambda.values = lambda.val, "glmnetModels" = glmnet_models)
     class(Res) <- "IsingFit"
     return(Res)
   }

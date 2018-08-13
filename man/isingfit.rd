@@ -8,7 +8,8 @@ This network estimation procedure eLasso, which is based on the Ising model, com
 }
 \usage{
 IsingFit(x, family='binomial', AND = TRUE, gamma = 0.25, 
-plot = TRUE, progressbar = TRUE, lowerbound.lambda = NA,...)
+         plot = TRUE, progressbar = TRUE, lowerbound.lambda = NA,
+         lambda.list = NA, ...)
 }
 
 \arguments{
@@ -32,6 +33,9 @@ Logical. Should the pbar be plotted in order to see the progress of the estimati
 }
   \item{lowerbound.lambda}{
 The minimum value of tuning parameter lambda (regularization parameter). Can be used to compare networks that are based on different sample sizes. The lowerbound.lambda is based on the number of observations in the smallest group n: sqrt(log(p)/n). p is the number of variables, that should be the same in both groups. When both networks are estimated with the same lowerbound for lambda (based on the smallest group), the two networks can be directly compared.
+}
+  \item{lambda.list}{
+List with p entries, containing candidate lambda sequences for each node.
 }
 \item{\dots}{
 Arguments sent to \code{qgraph}.
