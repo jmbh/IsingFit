@@ -52,6 +52,7 @@ IsingFit returns (invisibly) a 'IsingFit' object that contains the following ite
 \item{time }{The time it took to estimate the network.}
 \item{asymm.weights }{The (asymmetrical) weighted adjacency matrix before applying the AND/OR rule.}
 \item{lambda.values }{The values of the tuning parameter per node that ensured the best fitting set of neighbors.}
+\item{glmnet_models}{A list with the p glmnet models fitted inside of IsingFit.}
 }
 
 \references{
