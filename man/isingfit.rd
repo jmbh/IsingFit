@@ -87,6 +87,7 @@ diag(Graph) <- 0
 Thresh <- -rowSums(Graph) / 2
 
 # Simulate:
+library(IsingSampler)
 Data <- IsingSampler(nSample, Graph, Thresh)
 
 ### Fit using IsingFit ###

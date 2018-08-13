@@ -145,12 +145,26 @@ IsingFit <-
     threshNew[NodesToAnalyze] <- thresholds
     if (plot==TRUE) notplot=FALSE else notplot=TRUE
     q <- qgraph(graphNew,layout='spring',labels=names(NodesToAnalyze),DoNotPlot=notplot,...)
-    Res <- list(weiadj = graphNew, thresholds = threshNew, q = q, gamma = gamma, 
-                AND = AND, time = Sys.time() - t0, asymm.weights = asymm.weights,
-                lambda.values = lambda.val, "glmnetModels" = glmnet_models)
+    Res <- list(weiadj = graphNew, 
+                thresholds = threshNew, 
+                q = q, gamma = gamma, 
+                AND = AND, 
+                time = Sys.time() - t0, 
+                asymm.weights = asymm.weights,
+                lambda.values = lambda.val, 
+                glmnet_models = glmnet_models)
+    
     class(Res) <- "IsingFit"
     return(Res)
   }
+
+
+
+
+
+
+
+
 
 ## Methods:
 plot.IsingFit <- function(object,...) qgraph(object$q,DoNotPlot = FALSE, ...)
