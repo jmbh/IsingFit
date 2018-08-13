@@ -51,7 +51,7 @@ IsingFit <-
     
     for (i in 1: nvar){
       
-      if(!is.na(lambda.list)) {
+      if(!is.na(lambda.list[1])) {
         a <- glmnet(x[,-i], x[,i], family = family, lambda = lambda.list[[i]]) # take provided lambda sequence
       } else {
         a <- glmnet(x[,-i], x[,i], family = family) # take glmnet default lambda sequence
